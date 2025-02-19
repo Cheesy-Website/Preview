@@ -151,6 +151,42 @@ p {
                     Panic key (opens schoology when you press the key you selected).
                 </label>
             </li>
+            <li>
+                <label>
+ <h1>Select MP3 Files</h1>
+    <input type="file" id="fileInput" accept=".mp3" multiple>
+    <button id="savePlaylist">Save Playlist</button>
+    <button id="loadPlaylist">Load Playlist</button>
+    <ul id="playlist"></ul>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const savePlaylistButton = document.getElementById('savePlaylist');
+        const loadPlaylistButton = document.getElementById('loadPlaylist');
+        const playlistDisplay = document.getElementById('playlist');
+
+        let playlist = [];
+
+        savePlaylistButton.addEventListener('click', () => {
+            const files = Array.from(fileInput.files);
+            playlist = files.map(file => file.name);
+            document.cookie = `playlist=${JSON.stringify(playlist)}; path=/`;
+            alert('Playlist saved!');
+        });
+
+        loadPlaylistButton.addEventListener('click', () => {
+            const cookie = document.cookie.split('; ').find(row => row.startsWith('playlist='));
+            if (cookie) {
+                playlist = JSON.parse(cookie.split('=')[1]);
+                playlistDisplay.innerHTML = playlist.map(song => `<li>${song}</li>`).join('');
+                alert('Playlist loaded!');
+            } else {
+                alert('No playlist found!');
+            }
+        });
+    </script>
+                </label>
+            </li>
         </ul>
     </div>
     
