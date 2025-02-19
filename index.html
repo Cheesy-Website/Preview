@@ -24,8 +24,7 @@
     </script>
     <style>
         #playlist { margin-top: 20px; }
-        .playlist-item { margin: 5px 0; }
-        #controls { margin-top: 20px; }
+        #musicControls { margin-top: 20px; }
         h1 {
   font-size: 55px;
 }
@@ -110,10 +109,10 @@ p {
 
 </head>
 <body>
-    <h1>Music Player</h1>
+<h1>Music Player</h1>
     <select id="playlistSelect" onchange="loadPlaylist()"></select>
     <audio id="audioPlayer" controls></audio>
-    <div id="controls">
+    <div id="musicControls">
         <button onclick="prevSong()">Previous</button>
         <button onclick="nextSong()">Next</button>
         <button onclick="togglePlay()">Play/Pause</button>
@@ -126,6 +125,21 @@ p {
         let currentPlaylist = [];
         let currentIndex = 0;
         const audioPlayer = document.getElementById('audioPlayer');
+
+        function loadPlaylists() {
+            const cookie = document.cookie.split('; ').find(row => row.startsWith('playlists='));
+            if (cookie) {
+                playlists = JSON.parse(cookie.split('=')[1]);
+                const select = document.getElementById('playlistSelect');
+                select.innerHTML = '';
+                for (const name in playlists) {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    select.appendChild(option);
+                }
+            }
+        }
 
         function loadPlaylist() {
             const selectedPlaylist = document.getElementById('playlistSelect').value;
@@ -163,19 +177,7 @@ p {
             audioPlayer.currentTime += seconds;
         }
 
-        window.onload = function() {
-            const cookieData = document.cookie.split('; ').find(row => row.startsWith('playlists='));
-            if (cookieData) {
-                playlists = JSON.parse(cookieData.split('=')[1]);
-                const select = document.getElementById('playlistSelect');
-                for (const name in playlists) {
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = name;
-                    select.appendChild(option);
-                }
-            }
-        };
+        window.onload = loadPlaylists;
     </script>
 
 
@@ -225,40 +227,51 @@ p {
             </li>
             <li>
                 <label>
-        <h1>Music Player Playlist maker</h1>
-    <input type="text" id="songLink" placeholder="Enter MP3 or YouTube link">
-    <input type="text" id="playlistName" placeholder="Enter Playlist Name">
-    <button onclick="addSong()">Add to Playlist</button>
+        guage-html
+ Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #playlist { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Music Player</h1>
+    <input type="text" id="mp3Link" placeholder="Enter MP3 link" />
+    <button onclick="addToPlaylist()">Add to Playlist</button>
     <button onclick="savePlaylists()">Save Playlists</button>
     
-    <div id="playlist"></div>
+    <div id="playlist">
+        <h2>Your Playlists</h2>
+        <div id="playlistsContainer"></div>
+    </div>
 
     <script>
         let playlists = {};
 
-        function addSong() {
-            const link = document.getElementById('songLink').value;
-            const name = document.getElementById('playlistName').value;
-            if (!link || !name) {
-                alert("Please enter both a link and a playlist name.");
-                return;
+        function addToPlaylist() {
+            const link = document.getElementById('mp3Link').value;
+            const playlistName = prompt("Enter Playlist Name:");
+            if (!playlists[playlistName]) {
+                playlists[playlistName] = [];
             }
-            if (!playlists[name]) {
-                playlists[name] = [];
-            }
-            playlists[name].push(link);
+            playlists[playlistName].push(link);
             displayPlaylists();
-            document.getElementById('songLink').value = '';
+            document.getElementById('mp3Link').value = '';
         }
 
         function displayPlaylists() {
-            const playlistDiv = document.getElementById('playlist');
-            playlistDiv.innerHTML = '';
+            const container = document.getElementById('playlistsContainer');
+            container.innerHTML = '';
             for (const name in playlists) {
-                const item = document.createElement('div');
-                item.className = 'playlist-item';
-                item.innerHTML = `<strong>${name}</strong>: ${playlists[name].join(', ')}`;
-                playlistDiv.appendChild(item);
+                const playlistDiv = document.createElement('div');
+                playlistDiv.innerHTML = `<strong>${name}</strong>: ${playlists[name].join(', ')}`;
+                container.appendChild(playlistDiv);
             }
         }
 
@@ -266,14 +279,6 @@ p {
             document.cookie = "playlists=" + JSON.stringify(playlists) + "; path=/";
             alert("Playlists saved!");
         }
-
-        window.onload = function() {
-            const cookieData = document.cookie.split('; ').find(row => row.startsWith('playlists='));
-            if (cookieData) {
-                playlists = JSON.parse(cookieData.split('=')[1]);
-                displayPlaylists();
-            }
-        };
     </script>
                 </label>
             </li>
