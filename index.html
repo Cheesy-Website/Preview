@@ -1,0 +1,205 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <title>Cheesy-Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Unblocked Games For School.">
+    <meta name="keywords" content="Unblocked games, cheesy-website, A Dance Of Fire And Ice, ADOFAI, ADOFAI Unblocked, A Dance Of Fire And Ice Unblocked, cheesy website, sonic 3 air, sonic 3 air unblocked, mario 64, mario 64 unblocked, classic mario unblocked, classic mario, mario, mario unblocked, cookie clicker mods, cookie clicker unblocked, adventures with anxiety unblocked, cheeseman_gt, cheeseman, GBA, GBA emulator, GBA roms, gameboy advance emulator, gameboy advance, gameboy advance roms, gameboy advance unblocked, gameboy advance emulator unblocked">
+    <link rel="icon" href= 
+"https://i.ibb.co/xX7XBVx/Cheese-Goober.webp" 
+          type="image/x-icon">
+    <script>
+        setTimeout(function() {
+            document.title = "Home | Schoology";
+            document.querySelector("link[rel='icon']").href = "https://i.ibb.co/NY8yC9c/download-1.png";
+        }, 3500);
+    </script>
+    <script>
+        function saveKey() {
+            const key = document.getElementById('keyInput').value;
+            document.cookie = "userKey=" + key + "; path=/";
+        }
+    </script>
+    <style>
+        h1 {
+  font-size: 55px;
+}
+
+h2 {
+  font-size: 45px;
+}
+
+p {
+  font-size: 40px;
+}
+        body {
+            color: #00ff00;
+        }
+        #changelogtoggle {
+            font-size: 40px;
+            cursor: pointer;
+        }
+        #settingstoggle {
+            font-size: 40px;
+            cursor: pointer;
+        }
+        #changelog {
+            background: #000000;
+            display: none;
+            font-size: 40px;
+        }
+        #settings {
+            background: #000000;
+            display: none;
+            font-size: 40px;
+        }
+    </style>
+    <script>
+        function toggleWarning() {
+            const toggle = document.getElementById('warningToggle').checked;
+            document.cookie = "warningEnabled=" + toggle + "; path=/";
+        }
+
+        window.onload = function() {
+            const cookies = document.cookie.split(';');
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'warningEnabled') {
+                    document.getElementById('warningToggle').checked = (value === 'true');
+                }
+            });
+        };
+    </script>
+<script>
+    window.onbeforeunload = function() {
+        const cookies = document.cookie.split(';');
+        let warningEnabled = false;
+        cookies.forEach(cookie => {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'warningEnabled') {
+                warningEnabled = (value === 'true');
+            }
+        });
+        if (warningEnabled) {
+            return "Are you sure you want to leave this page?";
+        }
+    };
+</script>
+<script>
+        window.onload = function() {
+            const cookies = document.cookie.split(';');
+            let userKey = '';
+            cookies.forEach(cookie => {
+                if (cookie.trim().startsWith('userKey=')) {
+                    userKey = cookie.split('=')[1];
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === userKey) {
+                    window.open("https://cvcsd.schoology.com/home", "_blank");
+                }
+            });
+        };
+</script>
+</head>
+<body>
+
+
+
+<script>
+    function changeFont(fontUrl) {
+        document.getElementById('fontStyle').setAttribute('href', fontUrl);
+    }
+</script>
+<h1 style="color: #00ff00;">The website from the cheese of all cheese (CheeseMan Himself)</h1>
+<h2 style="color: #00ff00;">This is a hub for my projects</h2>
+<div id="changelogtoggle">Change Log (CLICK)</div>
+    <div id="changelog">
+        <h2>Change Log</h2>
+        <ul>
+            <li>Version 0.9.9 - BETA: Testing out 1 last feature. </li>
+            <li>Version 1.0.0 - Out of Beta 🥳🥳🥳, added a changelog, restored old website version. </li>
+            <li>Version 1.0.1 - Added the failed website (old version that was once the new version) to the games section. </li>
+            <li>Version 1.0.2 - Added a settings page. </li>
+            <li>Version 1.1.0 - HUGE UPDATE, Added a working Anti-GoGuardian (can be found in settings.) </li>
+            <li>Version 1.1.1 - Fixed Anti-GoGuardian. </li>
+            <li>Version 1.1.2 - GAME UPDATE, Added A Dance Of Fire And Ice. </li>
+            <li>Version 1.1.3 - Fixed Failed Website and ADOFAI not being seperated</li>
+            <li>Version 1.1.4 - SETTINGS UPDATE, Added Panic Key (can be found in settings)</li>
+            <li>Version 1.1.5 - BUG FIX, Had to remove Panic Key from CC and CC Chaos due to something with it conflicting and causing the 2 to not load (I might try to add it back later)</li>
+            <li>Version 1.1.6 - HUGE UPDATE, Updated the website hosting, I hope this works.</li>
+            <li>Version 1.1.7 - REVERT+GAME UPDATE, Netlify doesn't support all of my website's scripts such as panic key so I had to revert it, it was also just a nightmare to use. I also added in Sonic Robo Blast 2.</li>
+            <li>Version 1.1.8 - Back in the beta I tried to add custom font to my website but failed, I fixed the code and now the font is changed to be the Undertale font, eventually I will add a way to change between fonts.</li>
+        </ul>
+    </div>
+<div id="settingstoggle">Settings (CLICK)</div>
+    <div id="settings">
+        <h2>Settings</h2>
+        <ul>
+            <li>
+                <label>
+                    <input type="checkbox" id="warningToggle" onclick="toggleWarning()">
+                    Anti-GoGuardian Close (Can't be closed by GoGuardian.)
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="text" id="keyInput" onkeyup="saveKey()" placeholder="Type a key here...">
+                    Panic key (opens schoology when you press the key you selected).
+                </label>
+            </li>
+        </ul>
+    </div>
+    
+    <script>
+        const changelogtoggle = document.getElementById('changelogtoggle');
+        const changelog = document.getElementById('changelog');
+        const settingstoggle = document.getElementById('settingstoggle');
+        const settings = document.getElementById('settings');
+
+        changelogtoggle.addEventListener('click', () => {
+            changelog.style.display = changelog.style.display === 'none' ? 'block' : 'none';
+        });
+        settingstoggle.addEventListener('click', () => {
+            settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
+        });
+    </script>
+
+    <img src="https://i.ibb.co/nzjW2YQ/youtube-logo.png" width="128" height="90" alt="Unblocked games super mario 64 sm64 web cookie clicker mods cookie clicker modded sonic 3 air adventures with anxiety GBA game boy advance emulator school cheese free">
+    <a href="https://www.youtube.com/@CheeseMan_GT/featured" style="display:inline-block; text-decoration:none; color:#00ff00; "><h1>Subscribe</h1></a></p>
+  <img src="https://i.ibb.co/XWw9SXd/perfect-Cookie.webp" width="90" height="90" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/Cookie-Clicker-2.052-web-version-CHAOS-EDITION-/" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;">
+  <h1>Cookie Clicker Chaos Edition</h1>
+</a>
+<a href="https://drive.google.com/uc?export=download&id=1YIO3iMKorRLUnhDDY142xd_Ah4Fd5vEB" style="display:inline-block; text-decoration:none; color:#00ff00;">
+  <h1>Download CC Chaos</h1>
+</a>
+</p>
+
+
+  <img src="https://i.ibb.co/fCNNd0J/Cookie.png" width="90" height="90" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/cookie-clicker-v2.052-web-version-NORMAL-/" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;"><h1>Cookie Clicker</h1></a>
+   <a href="https://drive.google.com/uc?export=download&id=1rqvwBwxxTzfPVDBKyGscM1CuygUHMqbB" style="display:inline-block; text-decoration:none; color:#00ff00;"><h1>Download CC Normal</h1></a></p>
+   <img src="https://i.ibb.co/PQw993X/GBA.png" width="150" height="87" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/GBA-Emulator/" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;"><h1>GBA Emulator</h1></a>
+    <a href="https://drive.google.com/drive/folders/0B4dzhuEovDOMWlJCeFhxcGZxZE0?resourcekey=0-9NxXjgDjfTVhLGTiYApVcA&usp=drive_link" style="display:inline-block; text-decoration:none; color:#00ff00;"><h1>GBA Roms</h1></a></p>
+   <img src="https://i.ibb.co/ZxNnbvB/SM64.png" width="176" height="72" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/SM64-WEB/" style="display:inline-block; text-decoration:none; color:#00ff00; "><h1>Super Mario 64</h1></a></p>
+       <img src="https://i.ibb.co/YfPVqvS/S3AIR.jpg" width="125.25" height="111" alt="Images blocked, if not blocked refresh">
+     <a href="https://cheesy-website.github.io/Sonic3AIR/sonic3air_web.html" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;"><h1>Sonic3AIR</h1></a>
+    <a href="https://cheesy-website.github.io/Sonic3AIR-Mods/" style="display:inline-block; text-decoration:none; color:#00ff00;"><h1>Get Mods</h1></a></p>
+       <img src="https://i.ibb.co/VQByjc8/anxiety.png" width="200" height="105" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/anxiety/" style="display:inline-block; text-decoration:none; color:#00ff00; "><h1>Adventures with anxiety</h1></a></p>
+           <img src="https://i.ibb.co/MZNKcQZ/Mario-Classic.png" width="130" height="119" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/Classic-Mario/" style="display:inline-block; text-decoration:none; color:#00ff00; "><h1>Classic Mario</h1></a></p>
+  <img src="https://i.ibb.co/xX7XBVx/Cheese-Goober.webp" width="90" height="90" alt="Images blocked, if not blocked refresh">
+    <a href="https://stanthecheeseman.github.io/" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;"><h1>Failed website</h1></a></p>
+    <img src="https://i.ibb.co/9hwh8m7/download-2025-01-08-T131300-076.jpg" width="120" height="120" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/A-Dance-Of-Fire-And-Ice/" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;"><h1>A Dance Of Fire And Ice</h1></a></p>
+      <img src="https://i.ibb.co/p6sQTXV7/Screenshot-2025-01-30-7-51-37-AM.png" width="200" height="125" alt="Images blocked, if not blocked refresh">
+    <a href="https://cheesy-website.github.io/srb2web/" style="display:inline-block; text-decoration:none; color:#00ff00; margin-right:20px;"><h1>Sonic Robo-Blast 2</h1></a></p>
+</body>
+</html>
