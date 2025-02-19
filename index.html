@@ -107,6 +107,65 @@ p {
 </head>
 <body>
 
+        <audio id="audioPlayer" controls></audio>
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+    <button id="shuffle">Shuffle</button>
+    <button id="forward">Forward 10s</button>
+    <button id="backward">Backward 10s</button>
+
+    <script>
+        const audioPlayer = document.getElementById('audioPlayer');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const shuffleButton = document.getElementById('shuffle');
+        const forwardButton = document.getElementById('forward');
+        const backwardButton = document.getElementById('backward');
+
+        let playlist = [];
+        let currentIndex = 0;
+
+        function loadPlaylist() {
+            const cookie = document.cookie.split('; ').find(row => row.startsWith('playlist='));
+            if (cookie) {
+                playlist = JSON.parse(cookie.split('=')[1]);
+                if (playlist.length > 0) {
+                    audioPlayer.src = playlist[currentIndex];
+                    audioPlayer.play();
+                }
+            }
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            audioPlayer.src = playlist[currentIndex];
+            audioPlayer.play();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            audioPlayer.src = playlist[currentIndex];
+            audioPlayer.play();
+        });
+
+        shuffleButton.addEventListener('click', () => {
+            playlist.sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            audioPlayer.src = playlist[currentIndex];
+            audioPlayer.play();
+        });
+
+        forwardButton.addEventListener('click', () => {
+            audioPlayer.currentTime += 10;
+        });
+
+        backwardButton.addEventListener('click', () => {
+            audioPlayer.currentTime -= 10;
+        });
+
+        window.onload = loadPlaylist;
+    </script>
+
 
 
 <script>
