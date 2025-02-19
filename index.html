@@ -104,67 +104,73 @@ p {
             });
         };
 </script>
-</head>
-<body>
-
-        <audio id="audioPlayer" controls></audio>
-    <button id="prev">Previous</button>
-    <button id="next">Next</button>
-    <button id="shuffle">Shuffle</button>
-    <button id="forward">Forward 10s</button>
-    <button id="backward">Backward 10s</button>
-
     <script>
-        const audioPlayer = document.getElementById('audioPlayer');
-        const prevButton = document.getElementById('prev');
-        const nextButton = document.getElementById('next');
-        const shuffleButton = document.getElementById('shuffle');
-        const forwardButton = document.getElementById('forward');
-        const backwardButton = document.getElementById('backward');
-
-        let playlist = [];
+        function saveToCookies() {
+            const playlist = document.getElementById('playlist').value;
+            const files = document.getElementById('fileInput').files;
+            let fileArray = [];
+            for (let i = 0; i < files.length; i++) {
+                fileArray.push(files[i].name);
+            }
+            document.cookie = `playlist=${JSON.stringify({ [playlist]: fileArray })}; path=/`;
+            alert('Playlist saved!');
+        }
+    </script>
+    <script>
+        let currentPlaylist = [];
         let currentIndex = 0;
+        let audio = new Audio();
 
         function loadPlaylist() {
-            const cookie = document.cookie.split('; ').find(row => row.startsWith('playlist='));
-            if (cookie) {
-                playlist = JSON.parse(cookie.split('=')[1]);
-                if (playlist.length > 0) {
-                    audioPlayer.src = playlist[currentIndex];
-                    audioPlayer.play();
-                }
+            const cookies = document.cookie.split('; ');
+            const playlistCookie = cookies.find(row => row.startsWith('playlist='));
+            if (playlistCookie) {
+                const playlistData = JSON.parse(decodeURIComponent(playlistCookie.split('=')[1]));
+                currentPlaylist = Object.values(playlistData).flat();
+                playSong(currentIndex);
             }
         }
 
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-            audioPlayer.src = playlist[currentIndex];
-            audioPlayer.play();
-        });
+        function playSong(index) {
+            if (currentPlaylist.length > 0) {
+                audio.src = currentPlaylist[index];
+                audio.play();
+            }
+        }
 
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % playlist.length;
-            audioPlayer.src = playlist[currentIndex];
-            audioPlayer.play();
-        });
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % currentPlaylist.length;
+            playSong(currentIndex);
+        }
 
-        shuffleButton.addEventListener('click', () => {
-            playlist.sort(() => Math.random() - 0.5);
-            currentIndex = 0;
-            audioPlayer.src = playlist[currentIndex];
-            audioPlayer.play();
-        });
+        function previousSong() {
+            currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+            playSong(currentIndex);
+        }
 
-        forwardButton.addEventListener('click', () => {
-            audioPlayer.currentTime += 10;
-        });
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
 
-        backwardButton.addEventListener('click', () => {
-            audioPlayer.currentTime -= 10;
-        });
+        function seek(seconds) {
+            audio.currentTime += seconds;
+        }
 
         window.onload = loadPlaylist;
     </script>
+</head>
+<body>
+    <h1>MP3 Player</h1>
+    <button onclick="previousSong()">Previous</button>
+    <button onclick="togglePlayPause()">Play/Pause</button>
+    <button onclick="nextSong()">Next</button>
+    <button onclick="seek(-10)">-10s</button>
+    <button onclick="seek(10)">+10s</button>
+
 
 
 
@@ -212,38 +218,9 @@ p {
             </li>
             <li>
                 <label>
- <h1>Select MP3 Files</h1>
-    <input type="file" id="fileInput" accept=".mp3" multiple>
-    <button id="savePlaylist">Save Playlist</button>
-    <button id="loadPlaylist">Load Playlist</button>
-    <ul id="playlist"></ul>
-
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const savePlaylistButton = document.getElementById('savePlaylist');
-        const loadPlaylistButton = document.getElementById('loadPlaylist');
-        const playlistDisplay = document.getElementById('playlist');
-
-        let playlist = [];
-
-        savePlaylistButton.addEventListener('click', () => {
-            const files = Array.from(fileInput.files);
-            playlist = files.map(file => file.name);
-            document.cookie = `playlist=${JSON.stringify(playlist)}; path=/`;
-            alert('Playlist saved!');
-        });
-
-        loadPlaylistButton.addEventListener('click', () => {
-            const cookie = document.cookie.split('; ').find(row => row.startsWith('playlist='));
-            if (cookie) {
-                playlist = JSON.parse(cookie.split('=')[1]);
-                playlistDisplay.innerHTML = playlist.map(song => `<li>${song}</li>`).join('');
-                alert('Playlist loaded!');
-            } else {
-                alert('No playlist found!');
-            }
-        });
-    </script>
+    <input type="text" id="playlist" placeholder="Enter Playlist Name" />
+    <input type="file" id="fileInput" accept=".mp3" multiple />
+    <button onclick="saveToCookies()">Save Playlist</button>
                 </label>
             </li>
         </ul>
