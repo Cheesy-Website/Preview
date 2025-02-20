@@ -104,35 +104,23 @@ p {
             });
         };
 </script>
-    <script>
-        function saveMP3Link() {
-            const mp3Link = document.getElementById('mp3Input').value;
-            document.cookie = "mp3Link=" + encodeURIComponent(mp3Link) + "; path=/";
-            alert("MP3 link saved!");
-        }
-    </script>
+    
+</head>
+<body>
+    <h1>MP3 Player</h1>
+    <iframe frameborder="0" width="400" height="150" src="" id="iframe"></iframe>
+
     <script>
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+            if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
-        window.onload = function() {
-            const mp3Link = getCookie('mp3Link');
-            if (mp3Link) {
-                document.getElementById('audioSource').src = mp3Link;
-                document.getElementById('audioPlayer').load();
-            }
-        }
+        const savedLink = getCookie('savedLink');
+        document.getElementById('iframe').src = savedLink ? savedLink : 'about:blank';
     </script>
-</head>
-<body>
 
-    <audio id="audioPlayer" controls>
-        <source id="audioSource" src="MP3 URL HERE" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
 
 <script>
     function changeFont(fontUrl) {
@@ -178,9 +166,17 @@ p {
             </li>
             <li>
                 <label>
-        <h1>Save Your MP3 Link</h1>
-    <input type="text" id="mp3Input" placeholder="Enter MP3 link here">
-    <button onclick="saveMP3Link()">Save MP3 Link</button>
+    <h1>Save Your Link</h1>
+    <input type="text" id="linkInput" placeholder="Enter your link here">
+    <button onclick="saveLink()">Save Link</button>
+
+    <script>
+        function saveLink() {
+            const link = document.getElementById('linkInput').value;
+            document.cookie = "savedLink=" + link + "; path=/";
+            alert("Link saved!");
+        }
+    </script>
                 </label>
             </li>
         </ul>
