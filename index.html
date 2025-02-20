@@ -107,21 +107,27 @@ p {
     
 </head>
 <body>
-    <h1>MP3 Player</h1>
-    <iframe src="" id="iframe"></iframe>
+ <h1>Select a Song</h1>
+    <select id="Music Player" onchange="changeSong()">
+        <option value="https://cheesy-website.github.io/Preview/elevator.mp3">Elevator music</option>
+        <option value="song2.mp3">Placeholder</option>
+        <option value="song3.mp3">Placeholder</option>
+        <option value="song4.mp3">Placeholder</option>
+    </select>
+
+    <audio id="audioPlayer" controls autoplay loop>
+        <source src="song1.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
 
     <script>
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
+        function changeSong() {
+            var selector = document.getElementById("songSelector");
+            var audioPlayer = document.getElementById("audioPlayer");
+            audioPlayer.src = selector.value;
+            audioPlayer.play();
         }
-
-        const savedLink = getCookie('savedLink');
-        document.getElementById('iframe').src = savedLink ? savedLink : 'about:blank';
     </script>
-
-
 <script>
     function changeFont(fontUrl) {
         document.getElementById('fontStyle').setAttribute('href', fontUrl);
@@ -162,21 +168,6 @@ p {
                 <label>
                     <input type="text" id="keyInput" onkeyup="saveKey()" placeholder="Type a key here...">
                     Panic key (opens schoology when you press the key you selected).
-                </label>
-            </li>
-            <li>
-                <label>
-    <h1>Save Your Link</h1>
-    <input type="text" id="linkInput" placeholder="Enter your link here">
-    <button onclick="saveLink()">Save Link</button>
-
-    <script>
-        function saveLink() {
-            const link = document.getElementById('linkInput').value;
-            document.cookie = "savedLink=" + link + "; path=/";
-            alert("Link saved!");
-        }
-    </script>
                 </label>
             </li>
         </ul>
